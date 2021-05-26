@@ -29,5 +29,21 @@ def get_constituency(postcode):
     constituency = json.loads(api_response.content)["result"]["parliamentary_constituency"]
     print(f"Your constituency is: {constituency}")
 
+def collect_info(postcode):
+    #quick function to collect available info into a dictionary:
+    api_response = requests.get(f"https://api.postcodes.io/postcodes/{postcode}")
+    return json.loads(api_response.content)["result"]
+
+def show_info(postcode):
+    available_info = collect_info(postcode)
+    print("here is the available information")
+    for key in available_info.keys():
+        print(key)
+
+    desired_info = input("which bit of info would you like to know? ")
+    if desired_info in available_info.keys():
+        print(available_info[desired_info])
+
 postcode = get_postcode()
 get_constituency(postcode)
+show_info(postcode)
