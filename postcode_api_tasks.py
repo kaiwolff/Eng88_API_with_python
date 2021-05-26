@@ -23,4 +23,11 @@ def postcode_exists(postcode):
         print("The postcode is incorrect, please enter the correct postcode.")
         return False
 
+def get_constituency(postcode):
+    #should print the parliamentary constituency.
+    api_response = requests.get(f"https://api.postcodes.io/postcodes/{postcode}")
+    constituency = json.loads(api_response.content)["result"]["parliamentary_constituency"]
+    print(f"Your constituency is: {constituency}")
+
 postcode = get_postcode()
+get_constituency(postcode)
