@@ -1,3 +1,7 @@
+import requests
+#need ot import json to read "bytes" class
+import json
+
 def postcode_exists(postcode):
 
     postcode = postcode.lower()
