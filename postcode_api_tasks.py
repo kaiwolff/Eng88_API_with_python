@@ -2,6 +2,7 @@ import requests
 #need ot import json to read "bytes" class
 import json
 def get_postcode():
+    #prompts user for input of a postcode. runs until valid postcode in correct format is entered
     while True:
         postcode = input("please enter a valid UK postcode, without any spaces:")
 
@@ -12,15 +13,15 @@ def get_postcode():
             continue
 
 def postcode_exists(postcode):
-
+    #checks if postcode returns status 200 from postcodes.io
     postcode = postcode.lower()
     post_api_response = requests.get(f"https://api.postcodes.io/postcodes/{postcode}")
 
     if str(post_api_response.status_code) == "200": #200 is the response that signifies the website is responding.
-        print(f"Postcode {postcode} exists. Status code {post_api_response.status_code}")
+        #print(f"Postcode {postcode} exists. Status code {post_api_response.status_code}")
         return True
     else:
-        print("The postcode is incorrect, please enter the correct postcode.")
+        #print("The postcode is incorrect, please enter the correct postcode.")
         return False
 
 def get_constituency(postcode):
@@ -32,6 +33,7 @@ def get_constituency(postcode):
 def collect_info(postcode):
     #quick function to collect available info into a dictionary:
     api_response = requests.get(f"https://api.postcodes.io/postcodes/{postcode}")
+    #json loads converts the json into a python dictionary that I can actually work with
     return json.loads(api_response.content)["result"]
 
 def show_info(postcode):
@@ -45,5 +47,5 @@ def show_info(postcode):
         print(available_info[desired_info])
 
 postcode = get_postcode()
-get_constituency(postcode)
-show_info(postcode)
+# get_constituency(postcode)
+# show_info(postcode)
